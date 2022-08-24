@@ -1,0 +1,73 @@
+---
+title: "Mervar - Lab 1"
+author: "Alexander Mervar"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1.	 Install R on your machine by visiting https://www.r-project.org\ \
+**Done**
+\
+
+2.	Most likely, you’ll want to install R studio as well.  It is a useful interactive environment for R programming that includes windows for code, instantaneously executed commands, variables, and plots.  Download R Studio at https://www.rstudio.com/products/rstudio/download2/ \
+**Done**
+\
+
+3.	Read in the data file using the command: cities<-read.table("/Users/rgoldsto/Desktop/top200cities.txt", header = TRUE) replacing the path with the one that leads to where you put the file.\
+```{r}
+cities<-read.table("top200cities.txt", header = TRUE)
+```
+\
+
+4.	Cities has the following variables: rank, city [the city’s name], state, pop2015 [population in 2015], pop2010, pctchange [% change to population from 2010 to 2015], landsqmi [area of city in square miles], landsqkm, popdensity [population density in square miles], popdensitysqkm, latitude [in degrees; larger values are more to the North], longitude [in degrees; larger values are to the West].  Report these names with the command: names(cities)
+```{r}
+names(cities)
+```
+\
+
+5.	Are there more cities to the East or West of the midpoint of the continental U.S., which is located at 98.35 degrees?  Show the R commands you used to answer this question.  You shouldn’t have to count them by hand.
+```{r}
+midpointLong<-98.35
+numOfWest<-nrow(cities[cities$longitude>midpointLong,])
+numOfEast<-nrow(cities[cities$longitude<midpointLong,])
+numOfWest
+numOfEast
+```
+**Looking at the data, there are are more cities on the East side of the midpoint of the continental U.S., which is located at 98.35 degrees.**
+\
+
+6.	Are there more cities to the South or North of the midpoint of the continental U.S., which is located at 39.50 degrees?  Show the R commands you used to answer this question.
+```{r}
+midpointLat<-39.5
+numOfNorth<-nrow(cities[cities$latitude>midpointLat,])
+numOfSouth<-nrow(cities[cities$latitude<midpointLat,])
+numOfNorth
+numOfSouth
+```
+**Looking at the data, there are more cities to the South side of the midpoint of the continental U.S., which is located at 39.50 degrees.** \
+\
+
+7.	Show the R command that let’s you answer the question: what is the population density of Miami?
+```{r}
+cities$popdensitysqmi[cities$city=="Miami"]
+```
+\
+
+8.	There’s one city that has a percentage growth more than 50% from 2010 to 2015.  Show the R command that finds and prints the name of this city.
+```{r}
+cities$city[cities$pctchange>50]
+```
+\
+
+9.	Make a new data frame called mostcities that is the same as cities but excluding cities with growth more than 30% or longitudes > 140 degrees (Hawaii and Alaska).  Now show the scattergram that plots (using “plot”) the percentage change in mostcities as a function of longitude.  The plot should have one circle for each of the remaining 196 cities.  Looking at this plot, describe how recent growth of cities in America varies with their East-West location.
+```{r}
+
+```
+
+
+
+
