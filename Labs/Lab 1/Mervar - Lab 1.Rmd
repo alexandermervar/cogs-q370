@@ -65,9 +65,11 @@ cities$city[cities$pctchange>50]
 
 9.	Make a new data frame called mostcities that is the same as cities but excluding cities with growth more than 30% or longitudes > 140 degrees (Hawaii and Alaska).  Now show the scattergram that plots (using “plot”) the percentage change in mostcities as a function of longitude.  The plot should have one circle for each of the remaining 196 cities.  Looking at this plot, describe how recent growth of cities in America varies with their East-West location.
 ```{r}
-
+mostcities<-cities[cities$pctchange<30,]
+mostcities<-mostcities[mostcities$longitude<140,]
+plot(mostcities$longitude,mostcities$pctchange,xlab = "Longitude",ylab = "Pct Change")
 ```
-
+**Looking at the plot, it seems that the West side of the country has a major packet of cities at longitude 118 that have strong amount of growth ~3-7%. The East side of the country does not seem to have this kind of strong packet of cities. Instead, it has a lot of smaller packets with a cluster of a handful of cities.**
 
 
 
