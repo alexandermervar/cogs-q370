@@ -18,6 +18,7 @@ library(ez) # library for doing ANOVA statistics easily
 clownData <- read.csv("clowns.csv", header = TRUE, sep="")
 head(clownData)
 ```
+\pagebreak
 
 ## Problem 1
 *What are your independent variables and dependent variables? What are the different levels for each variable?*
@@ -26,8 +27,7 @@ head(clownData)
 **Dependent: ** The political party and gender are the dependent variables for this analysis.
 \
 **Levels for Each Variable: ** The levels for the independent value are continuous due to the fact that the salary can be any range of numbers. The levels for the dependent variable are Republican or Democrat for "party" and Male or Female for "gender."
-\
-\
+\pagebreak
 
 ## Problem 2
 *a) What is the mean (R command: mean(x)) and standard deviation (R command: sd(x)) of all 24 clowns’ salaries?*
@@ -54,27 +54,24 @@ byGenderAndPartyMean <- summarize(byGenderAndParty, salary=mean(salary))
 print(byGenderAndPartyMean)
 
 ```
-\
-\
+\pagebreak
 
 ## Problem 3
 *Make a line graph of the means for male democrats, female democrats, male republicans, and female republicans, with all means shown in a single graph, and error bars showing 95% confidence intervals. For this task I use ggplot, and the sub-command I use to create the error bars is stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width = 0.90),width=0.2).  Some points will be taken off for ugliness (e.g. if the plot’s legend overlap with a line) or imprecision (e.g. if you don’t show a legend or label your axes).  Plot the political affiliation on the x-axis and the salary on the y-axis. Identify the lines for male and female means by a change in line boldness, symbol shape, color, or dash style.  Does it look like there is an interaction between the independent variables? Why or why not?*
 ```{r}
-ggplot(byGenderAndPartyMean,aes(x=party,y=salary,color=gender,group=gender,shape=gender))+coord_cartesian(ylim = c(25000, 37000))+ stat_summary(fun=mean,geom="point",aes(size=3))+stat_summary(fun=mean,geom="line")+stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = position_dodge(width = 0.90),width=0.2)+xlab("Party")+ylab("Salary")+ theme (text=element_text(size=20))+guides(size = FALSE)
+ggplot(clownData,aes(x=party,y=salary,color=gender,group=gender,shape=gender))+coord_cartesian(ylim = c(25000, 37000))+ stat_summary(fun=mean,geom="point",aes(size=3))+stat_summary(fun=mean,geom="line")+stat_summary(fun.data = mean_cl_normal, geom = "errorbar")+xlab("Party")+ylab("Salary")+ theme(text=element_text(size=20))+guides(size = FALSE)
 
 #ggplot(testonly,aes(x=schedule,y=hit,color=group,group=group,shape=group))+coord_cartesian(ylim = c(0.9, 1))+ stat_summary(fun=mean,geom="point",aes(size=3))+stat_summary(fun=mean,geom="line")+stat_summary(fun.data=mean_cl_normal,geom="errorbar")+xlab("Schedule")+ylab("Percent Correct")+ theme (text=element_text(size=20))+guides(size = FALSE)
 ```
 **There does indeed look like there is an interaction between the independent variables due to the fact that there is an intersection in lines as well as the means for each political party looking similar.**
-\
-\
+\pagebreak
 
 ## Problem 4
 *Make a bar graph with 95% confidence interval bars of the same four means as in 3).  I use ggplot with geom= “bar” in stat_summary().*
 ```{r}
-ggplot(byGenderAndPartyMean,aes(x=party,y=salary,fill=gender))+coord_cartesian(ylim = c(25000, 37000))+ stat_summary(fun=mean,geom="bar",aes(size=3), ,position=position_dodge(width=0.9))+stat_summary(fun=mean,geom="line")+stat_summary(fun.data=mean_cl_normal,geom="errorbar",position=position_dodge(0.9))+xlab("Party")+ylab("Salary")+ theme (text=element_text(size=20))+guides(size = FALSE)
+ggplot(clownData,aes(x=party,y=salary,fill=gender))+coord_cartesian(ylim = c(25000, 37000))+ stat_summary(fun=mean,geom="bar",aes(size=3),position=position_dodge(width=0.9))+stat_summary(fun=mean,geom="line")+stat_summary(fun.data=mean_cl_normal,geom="errorbar",position=position_dodge(0.9))+xlab("Party")+ylab("Salary")+theme(text=element_text(size=20))+guides(size = FALSE)
 ```
-\
-\
+\pagebreak
 
 ## Problem 5
 *Make a scatterplot of the twins’ IQs.   Label the X and Y axes "Spam-fed Twin" and "Scum-fed Twin" respectively.*
@@ -83,8 +80,7 @@ spamData <- read.csv("spam.csv",header = TRUE, sep="")
 head(spamData)
 plot(spamData$spam, spamData$scum, xlab = "Spam-fed Twin", ylab = "Scum-fed Twin")
 ```
-\
-\
+\pagebreak
 
 ## Problem 6
 *Are the IQs for twins from the same pair significantly correlated? Find the correlation coefficient.  In R, cor(x,y) will find the correlation between two variables x and y, but if you want R to tell you if the correlation is significant you’ll want to use cor.test(x,y).*
@@ -92,8 +88,7 @@ plot(spamData$spam, spamData$scum, xlab = "Spam-fed Twin", ylab = "Scum-fed Twin
 cor.test(spamData$spam, spamData$scum)
 ```
 **There is a significant correlation between the spam and scum twin because p < 0.05. The correlation coefficient is estimated at 0.9090197.**
-\
-\
+\pagebreak
 
 ## Problem 7
 *Is there a significant difference in IQs due to diet differences? Use a paired samples t-test.  You could use an R function like “t.test(x,y,paired=TRUE)”*
@@ -101,8 +96,7 @@ cor.test(spamData$spam, spamData$scum)
 t.test(spamData$spam, spamData$scum, paired = TRUE)
 ```
 **There is a significant difference due to diet differences. We can reject the null hypothesis because p < 0.05.**
-\
-\
+\pagebreak
 
 ## Problem 8
 *Is there a significant difference in IQs due to diet differences? Use an independent samples (unpaired) t-test. “t.test(x,y)” would do the trick.*
@@ -110,8 +104,7 @@ t.test(spamData$spam, spamData$scum, paired = TRUE)
 t.test(spamData$spam, spamData$scum)
 ```
 **There is NOT a significant difference due to diet differences. We cannot reject the null hypothesis because p < 0.05.**
-\
-\
+\pagebreak
 
 ## Problem 9
 *You should have gotten opposite answers to the question "Is there a significant difference" in Questions 7) and 8).  How is this possible, and why did this happen in the current example?*
