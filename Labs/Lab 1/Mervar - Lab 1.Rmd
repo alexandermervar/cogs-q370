@@ -27,7 +27,7 @@ cities<-read.table("top200cities.txt", header = TRUE)
 ```{r}
 names(cities)
 ```
-\
+\pagebreak
 
 5.	Are there more cities to the East or West of the midpoint of the continental U.S., which is located at 98.35 degrees?  Show the R commands you used to answer this question.  You shouldn’t have to count them by hand.
 ```{r}
@@ -61,7 +61,7 @@ cities$popdensitysqmi[cities$city=="Miami"]
 ```{r}
 cities$city[cities$pctchange>50]
 ```
-\
+\pagebreak
 
 9.	Make a new data frame called mostcities that is the same as cities but excluding cities with growth more than 30% or longitudes > 140 degrees (Hawaii and Alaska).  Now show the scattergram that plots (using “plot”) the percentage change in mostcities as a function of longitude.  The plot should have one circle for each of the remaining 196 cities.  Looking at this plot, describe how recent growth of cities in America varies with their East-West location.
 ```{r}
@@ -70,6 +70,28 @@ mostcities<-mostcities[mostcities$longitude<140,]
 plot(mostcities$longitude,mostcities$pctchange,xlab = "Longitude",ylab = "Pct Change")
 ```
 **Looking at the plot, it seems that the West side of the country has a major packet of cities at longitude 118 that have strong amount of growth ~3-7%. The East side of the country does not seem to have this kind of strong packet of cities. Instead, it has a lot of smaller packets with a cluster of a handful of cities.**
+\
 
+10.	Make a new data frame called contiguoUS that is the same as cities but excludes cities in Hawaii and Alaska (which have longitudes > 140 degrees). Show a plot of where the cities are that looks like plot below.  Note: because increasing longitudes go from East to West, you’ll need to come up with some way to reverse the longitude values so that the map doesn’t come out reversed.
+```{r}
+continguoUS <- cities[cities$longitude<140,]
+plot(xlim = rev(range(continguoUS$longitude)),continguoUS$latitude, type="n", xlab = "Longitude", ylab = "Latitude")
+text(continguoUS$longitude,continguoUS$latitude, labels=continguoUS$city,cex= 0.5)
+```
+\
 
+11. Make a plot of the most densely populated 20 cities in the contiguous US.  You’ll probably want to first (reverse) order the cities in terms of population density and then extract a subset of 20 of the cities.  It should look something like:
+```{r}
+denselyPop <- continguoUS[rev(order(continguoUS$popdensitysqmi))[1:20], ]
+plot(xlim = rev(range(denselyPop$longitude)),denselyPop$latitude, type="n", xlab = "Longitude", ylab = "Latitude")
+text(denselyPop$longitude,denselyPop$latitude, labels=denselyPop$city,cex= 0.7)
+```
+\pagebreak
 
+12.  **Extra Credit:** According to Zipf’s Law, there is a fairly strict relation between the rank order of a city (1 = New York, 2 = Los Angeles, etc.) in terms of its population and its actual population.  In particular:
+$$Population \propto Rank^p$$
+where p = -1 and $\propto$ means "proportional to."  This law predicts that if the log of population is plotted against the log of rank, then the data will be well fit by a straight line, and furthermore, the slope of that line should be -1.  Show what this plot looks like.  Does a straight line fit the log transformed data well (you could use the “lm” procedure as one way to find the best fitting linear relation between variables)?  Is the slope of that line approximately -1? 
+
+13.  Which of these 200 cities would you most like to live in, and why?
+\
+**For me, I firmly believe that once someone emerges into the "real world," it's extremely beneficial to move to the closest and biggest city in order to grow as a young person. Over the Summer, I worked for Abbott and I realized just how much a person can gain from living in a city. Although personally I find myself being less gregarious when left to my own devices, Chicago seems like a place that is too obviously beneficial for me to pass up following my graduation.**
