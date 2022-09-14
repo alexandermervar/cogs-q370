@@ -1,0 +1,71 @@
+---
+title: "Mervar - Lab 3"
+author: "Alexander Mervar"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Problem 1
+*(2 independent variables: both within-subject).  Susan ran 12 subjects in an experiment testing whether people perform better under stress and with motivation.  Each subject ran in four conditions: stressed with motivation, stressed without motivation, unstressed with motivation, and unstressed without motivation.  The task was to solve a maze as fast as possible.  Stressed subjects were told that a video of their performance was being broadcast live on the web.  Motivated subjects were told they would win a lifetime supply of twinkies if they were one of the 5 best subjects. The table below shows the subjects times for solving mazes (in seconds).  This data can be found in the file “stressPuppies.csv”.*
+```{r}
+library(ez) #for doing the ANOVAs
+library(dplyr) # great library for massaging data
+library(ggplot2)
+
+puppies <- read.csv("stressPuppies.csv", header = TRUE, sep = "")
+head(puppies)
+```
+*Run a repeated measures ANOVA using the ezANOVA() function in the “ez” library in R to determine whether there is a main effect of stress on performance, a main effect of motivation on performance, and an interaction between stress and motivation on performance.  Show the ANOVA table that results from the analysis.*
+```{r}
+ezANOVA(data=puppies,dv=RT,within=c(stress,motivation),wid=subject)
+```
+\pagebreak
+
+## Problem 2
+*Make a table that shows the four means for each combination of conditions.  It should contain a RT for: stressed motivated, stressed unmotivated, unstressed motivated, and unstressed unmotivated.  Two good ways of creating this table are to use the “ezStats()” function in the “ez” library or “group_by()” and “summarize()” in the “Dplyr” library.*
+```{r}
+ezStats(data=puppies,dv=RT,within=c(stress,motivation),wid=subject)
+```
+\pagebreak
+
+## Problem 3
+*Given your results in 1) and 2), give an interpretation of the main effects and interactions found in the experiment, interpreting all and only the significant results (using a p<.05 criterion for significance).*
+**Given the results of problems 1 & 2, you can conclude there is a significant interaction between stress and motivation. There is also a significant interaction between stress. In regards to the interaction between motivation, P !< 0.05 $\therefore$ we CANNOT reject the null hypothesis, there. The means from problem 2 can back up this analysis by looking at the values and the deltas between them when the independent variables are changed.**
+\pagebreak
+
+## Problem 4
+*(4 independent variables: 2 within-subject and 2 between).  Susan decides to look to see whether either or both of the between-subjects variables, gender and occupation, influence response time, either as main effects or by interacting with other independent variables.  Show the ANOVA that she should run in ezANOVA and the show the resulting ANOVA table. Interpret any new significant effects (using a p<.05 criterion for significance) that go beyond the ones you described in Question 3 above.*
+```{r}
+ezANOVA(data=puppies,dv=RT,within=c(stress,motivation),between=c(gender,occupation),wid=subject)
+ezStats(data=puppies,dv=RT,within=c(stress,motivation),between=c(gender,occupation),wid=subject)
+```
+**When completing the new ANOVA analysis between gender and occupation, we can see that there is significance within occupation, stress, and stress:motivation. Occupation is the only new datapoint we have gathered from this analysis. We can say that we can reject the null hypothesis due to P<0.05.**
+\pagebreak
+
+## Problem 5
+*Make a bar graph or line chart that visually shows all of the new, between-subjects significant effects you described in Question 4.*
+```{r}
+# ggplot(iqFrame,aes(x=school,y=iqs,fill=school))+stat_summary(fun=mean,geom="bar")+stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2) + theme (text=element_text(size=20))  # building up a plot the ggplot way. Use aes to specify aesthetics, and add two summary graphics - one for the means (shown in bars), and one for the error bars
+
+ggplot(puppies,aes(x=occupation,y=RT,fill=gender))+ stat_summary(fun=mean,geom="bar",aes(size=3),position=position_dodge(width=0.9))+stat_summary(fun=mean,geom="line")+stat_summary(fun.data=mean_cl_normal,geom="errorbar",position=position_dodge(0.9))+xlab("Occupation")+ylab("RT")+theme(text=element_text(size=20))+guides(size = FALSE)+facet_wrap(~stress)
+```
+\pagebreak
+
+## Problem 6
+*Let’s imagine that Susan’s sister Sarah does not have access to a subject pool.  She wants to explore interactions between stress and motivation using only herself as a subject.  She runs herself 12 times each in of four condtions: stressed with motivation, stressed without motivation, unstressed with motivation, and unstressed without motivation. In an amazing coincidence, her results are the same as the earlier data!*
+\
+*Conduct an ANOVA using the lm() function in R for running this univariate ANOVA (you can’t use ezANOVA any more because ezANOVA assumes you have a column that identifies the subjects’ IDs for the purposes of matching up data, and in this experiment there is only one subject).  The model should be specified so that it can determine whether there is a main effect of stress on performance, a main effect of motivation on performance, and an interaction between stress and motivation on performance.  You don’t need to read in a separate data file.  You can just use “stressPuppies” again but don’t enter the “subject” column in your analysis.  Show the resulting ANOVA table.*
+```{r}
+
+```
+
+
+
+
+
+
+
