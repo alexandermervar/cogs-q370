@@ -60,9 +60,22 @@ ggplot(puppies,aes(x=occupation,y=RT,fill=gender))+ stat_summary(fun=mean,geom="
 \
 *Conduct an ANOVA using the lm() function in R for running this univariate ANOVA (you can’t use ezANOVA any more because ezANOVA assumes you have a column that identifies the subjects’ IDs for the purposes of matching up data, and in this experiment there is only one subject).  The model should be specified so that it can determine whether there is a main effect of stress on performance, a main effect of motivation on performance, and an interaction between stress and motivation on performance.  You don’t need to read in a separate data file.  You can just use “stressPuppies” again but don’t enter the “subject” column in your analysis.  Show the resulting ANOVA table.*
 ```{r}
+uni<-lm(puppies$RT~puppies$stress+puppies$motivation+puppies$stress*puppies$motivation)
+summary(uni)
+
+#uni<-lm(recalled$recall~recalled$study*recalled$test) # This is the univariate version of an ANOVA in which case we are not taking advantage of the knowledge that the same subject produced results in four conditions
+
+#to specify a model in lm, dependent_variable ~ independent_variables.  Main effects separated by +.  Use * to specify all main effects and interactions involving variables, or : to only introduce specific interactions
+#So, the above model is equivalent to uni<-lm(recalled$recall~recalled$study+recalled$test+recalled$study:recalled$test) because * introduces main effects of study and test AND their interaction
+
+#summary(uni)
 
 ```
+\pagebreak
 
+## Problem 7
+*Given that we used the same data for the ANOVAs in Questions 1 and 6, why did you get different results in terms of which effects were significant (at a p<.05 level)?*
+**This is due to the fact that we were completely the analysis on different subjects. In the case of problem 1, the subjects were different people and therefore, we can assume we have a column that identifies the subjects’ IDs for the purposes of matching up data, and in experiment 6, there is only one subject. Therefore, we need to change our methodologies in order to get accurate and scientifically sound data.**
 
 
 
