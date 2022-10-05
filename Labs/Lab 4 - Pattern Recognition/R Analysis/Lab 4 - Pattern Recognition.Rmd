@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+library(knitr)
+# Set so that long lines in R will be wrapped:
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
 ```
 
 ### Provided Code
@@ -66,7 +68,7 @@ model<-ezANOVA(data=goodSearchTimes,dv=rt,within=c(set_size,target_presence,task
 # could include year as a variable with "between=year".  Main effect maybe but would hope there wouldn't be (m)any interactionsw
 model # show results of the ANOVA model
 table1 <-  list(rtaverages$set_size,rtaverages$task) #find breakdown just of setsize and task - less broken down than the above tapply code, obtained just by deleting one item from the INDEX list "INDEX=list(rtaverages$target_presence,rtaverages$set_size,rtaverages$task)" above
-table1 #show means so that one can begin to interpret the data.  You'll break down rtaverages in different ways to get the different mean RTs that you need for your report
+# table1 #show means so that one can begin to interpret the data.  You'll break down rtaverages in different ways to get the different mean RTs that you need for your report
 ```
 
 ```{r}
