@@ -1,0 +1,24 @@
+---
+title: "Rob Example"
+author: "Alexander Mervar"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ez) #for doing the ANOVAs
+library(dplyr)
+library(ggplot2)
+
+data<-read.table("dalle.txt", sep=' ', header = TRUE) # I separated the columns by tabs, hence the " " for sep
+table1 <- tapply(X=data$enjoyment,INDEX=list(data$artist,data$attributed),FUN=mean) #apply mean function to words recalled broken down by motivation and type of stimulus
+table1 # show means so that one can begin to interpret the data
+model<-ezANOVA(data=data,dv=enjoyment,within=c(artist,attributed),wid=subject) # conduct a repeated measures ANOVA - dv = dependent variable.  within = a list of all of the within subject variables.  wid = variable that is used to group data by subject
+model # show results of the ANOVA model
+ggplot(data,aes(x=artist,y=enjoyment,fill=attributed))+stat_summary(fun=mean,geom="bar",position=position_dodge(width=0.9))+stat_summary(fun.data=mean_cl_normal,geom="errorbar",position=position_dodge(0.9))+ xlab("Artist") + ylab("Enjoyment")
+```
+

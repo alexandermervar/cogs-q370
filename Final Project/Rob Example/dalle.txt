@@ -1,0 +1,19 @@
+subject artist attributed enjoyment
+karen computer computer 5
+karen human computer 6
+karen computer human 4
+karen human human 2
+susan computer computer 6
+susan human computer 6
+susan computer human 7
+susan human human 2
+frank computer computer 5
+frank human computer 6
+frank computer human 4
+frank human human 3
+edna computer computer 5
+edna human computer 6
+edna computer human 5
+edna human human 2
+
+
