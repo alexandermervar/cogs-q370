@@ -1,0 +1,28 @@
+---
+title: "MyAnalysis"
+author: "Alexander Mervar"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ez) 
+library(dplyr)
+library(ggplot2)
+
+data<-read.table("cleanedData.csv", sep=',', header = TRUE)
+head(data)
+```
+
+```{r}
+table1 <- tapply(X=data$Enjoyment,INDEX=list(data$Artist,data$Attributed),FUN=mean) #apply mean function to words recalled broken down by motivation and type of stimulus
+table1 # show means so that one can begin to interpret the data
+model<-ezANOVA(data=data,dv=Enjoyment,within=c(Artist,Attributed),wid=Subject) # conduct a repeated measures ANOVA - dv = dependent variable.  within = a list of all of the within Subject variables.  wid = variable that is used to group data by Subject
+model # show results of the ANOVA model
+ggplot(data,aes(x=Artist,y=Enjoyment,fill=Attributed))+stat_summary(fun=mean,geom="bar",position=position_dodge(width=0.9))+stat_summary(fun.data=mean_cl_normal,geom="errorbar",position=position_dodge(0.9))+ xlab("Artist") + ylab("Enjoyment")
+```
+
